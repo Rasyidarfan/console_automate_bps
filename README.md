@@ -6,272 +6,255 @@ Repository ini berisi koleksi script JavaScript untuk mengotomatisasi berbagai p
 
 ## 📋 Deskripsi
 
-Script-script dalam repository ini dirancang khusus untuk mengotomatisasi tugas-tugas repetitif pada platform web BPS, sehingga meningkatkan efisiensi dan mengurangi kesalahan manual.
+Script-script dalam repository ini dirancang khusus untuk mengotomatisasi tugas-tugas repetitif pada platform web BPS, sehingga meningkatkan efisiensi dan mengurangi kesalahan manual dalam proses manajemen mitra dan download dokumen.
 
 ## 🎯 Target Platform
 
 ### 1. Manajemen Mitra BPS
 - **URL:** `manajemen-mitra.bps.go.id`
-- **Fungsi:** Otomatisasi proses alokasi dan manajemen mitra survei
+- **Fungsi:** Otomatisasi proses alokasi dan penerimaan mitra survei
 
 ### 2. SIPW (Sistem Informasi Pengolahan Web)
-- **URL:** `sipw.bps.go.id`
-- **Fungsi:** Otomatisasi proses pengolahan data dan workflow
+- **URL:** `sipw.bps.go.id`  
+- **Fungsi:** Otomatisasi download dokumen secara massal
 
-## 📁 Struktur File
+## 📁 File dalam Repository
 
 ```
 console_automate_bps/
-├── README.md                 # Dokumentasi utama
-├── mitra-management/         # Script untuk manajemen-mitra.bps.go.id
-│   ├── alokasi-mitra.js     # Otomatisasi alokasi mitra
-│   ├── bulk-assignment.js   # Assignment massal mitra
-│   ├── status-checker.js    # Pengecekan status mitra
-│   └── data-export.js       # Export data mitra
-├── sipw-automation/          # Script untuk sipw.bps.go.id
-│   ├── data-entry.js        # Otomatisasi input data
-│   ├── validation.js        # Validasi data otomatis
-│   ├── workflow.js          # Otomatisasi workflow
-│   └── report-generator.js  # Generate laporan otomatis
-└── utils/                   # Utility functions
-    ├── common-functions.js  # Fungsi umum yang sering digunakan
-    ├── logger.js           # Sistem logging
-    └── config.js           # Konfigurasi global
+├── README.md                        # Dokumentasi ini
+├── SIPW_download_all_document.js    # Auto download dokumen SIPW
+├── alokasi mitra.js                 # Auto input email untuk alokasi mitra
+└── terima mitra.js                  # Auto approval/penerimaan mitra
 ```
 
 ## 🚀 Cara Penggunaan
 
-### Persiapan
-1. Buka browser (Chrome/Firefox/Edge)
-2. Login ke platform BPS yang diinginkan
-3. Buka Developer Tools (F12)
-4. Masuk ke tab **Console**
+### Persiapan Umum
+1. Buka browser Chrome/Firefox/Edge
+2. Login ke platform BPS yang sesuai
+3. Navigasi ke halaman yang akan diautomasi
+4. Buka Developer Tools (tekan **F12**)
+5. Masuk ke tab **Console**
 
-### Menjalankan Script
+---
 
-#### Untuk Manajemen Mitra:
+## 📄 Dokumentasi Script
+
+### 1. `SIPW_download_all_document.js`
+**Platform:** sipw.bps.go.id
+
+#### Fungsi:
+Mengotomatisasi proses download dokumen dari semua halaman di SIPW dengan mengklik tombol download secara berurutan.
+
+#### Fitur:
+- ✅ Auto-click tombol download di setiap baris tabel
+- ✅ Navigasi otomatis ke halaman berikutnya
+- ✅ Progress tracking dengan log detail
+- ✅ Delay 5 detik antar klik untuk menghindari overload server
+- ✅ Berhenti otomatis jika sudah mencapai halaman terakhir
+
+#### Cara Penggunaan:
 ```javascript
-// 1. Copy script yang diperlukan dari folder mitra-management/
-// 2. Paste di console browser
-// 3. Tekan Enter untuk menjalankan
-
-// Contoh: Alokasi Mitra Otomatis
-// [Paste script alokasi-mitra.js di sini]
+// 1. Buka halaman daftar dokumen di SIPW
+// 2. Pastikan tabel dokumen sudah dimuat
+// 3. Copy-paste script SIPW_download_all_document.js ke console
+// 4. Tekan Enter untuk menjalankan
+// 5. Script akan berjalan otomatis untuk semua halaman
 ```
 
-#### Untuk SIPW:
-```javascript
-// 1. Copy script yang diperlukan dari folder sipw-automation/
-// 2. Paste di console browser  
-// 3. Tekan Enter untuk menjalankan
+#### Target Selector:
+- **Tombol Download:** `#root > div > div > main > div > div.p-6.pt-0 > div > div.rounded-md.border > div > table > tbody > tr > td:nth-child(6) > div > button`
+- **Tombol Next Page:** `#root > div > div > main > div > div.p-6.pt-0 > div > div.flex.items-center.justify-end.space-x-2.py-4 > div:nth-child(3) > button:nth-child(3)`
 
-// Contoh: Data Entry Otomatis
-// [Paste script data-entry.js di sini]
+---
+
+### 2. `alokasi mitra.js`
+**Platform:** manajemen-mitra.bps.go.id
+
+#### Fungsi:
+Mengotomatisasi input email mitra untuk proses alokasi dengan mensimulasikan pengetikan dan klik tombol.
+
+#### Fitur:
+- ✅ Input email otomatis dari list yang telah didefinisikan
+- ✅ Simulasi pengetikan natural (character by character)
+- ✅ Auto-click tombol setelah input email
+- ✅ Delay 3 detik antar proses untuk stabilitas
+- ✅ Progress log untuk tracking
+
+#### Data Email:
+Script ini menggunakan 10 email yang sudah terdefinisi:
+```javascript
+const emails = [
+    'nikodemusmandowen1622@gmail.com',
+    'juliakoibur@gmail.com',
+    'rudytehupuring@gmail.com',
+    'alinawenda69@gmail.com',
+    'eleminamatuan7721@gmail.com',
+    'hadjierrahman@gmail.com',
+    'jovantamelab@transformnation.is',
+    'mekiwanimbo9734@gmail.com',
+    'bandargombo9723@gmail.com',
+    'slametnf17@gmail.com'
+];
 ```
 
-## 📝 Deskripsi File
+#### Cara Penggunaan:
+```javascript
+// 1. Buka halaman alokasi mitra
+// 2. Pastikan form input email sudah terlihat
+// 3. Edit array emails jika diperlukan
+// 4. Copy-paste script alokasi mitra.js ke console
+// 5. Tekan Enter untuk menjalankan
+// 6. Script akan memproses semua email secara berurutan
+```
 
-### Manajemen Mitra (`mitra-management/`)
+#### Target Selector:
+- **Input Email:** `#tabs-home-ex1 input.form-control`
+- **Tombol Click:** `#tabs-home-ex1 .cursor-pointer:nth(2)`
 
-#### `alokasi-mitra.js`
-- **Fungsi:** Mengotomatisasi proses alokasi mitra ke berbagai wilayah kerja
-- **Fitur:**
-  - Alokasi mitra berdasarkan kriteria tertentu
-  - Bulk assignment ke multiple wilayah
-  - Validasi otomatis sebelum assignment
-  - Progress tracking dengan log detail
+---
 
-#### `bulk-assignment.js`
-- **Fungsi:** Assignment massal mitra dalam jumlah besar
-- **Fitur:**
-  - Import data dari CSV/Excel
-  - Batch processing dengan delay
-  - Error handling dan retry mechanism
-  - Summary report hasil assignment
+### 3. `terima mitra.js`
+**Platform:** manajemen-mitra.bps.go.id
 
-#### `status-checker.js`
-- **Fungsi:** Monitoring status mitra secara berkala
-- **Fitur:**
-  - Pengecekan status real-time
-  - Alert untuk perubahan status penting
-  - Export hasil monitoring
-  - Dashboard sederhana di console
+#### Fungsi:
+Mengotomatisasi proses penerimaan/approval mitra secara massal dengan menangani button success, SweetAlert confirmations, dan navigasi.
 
-#### `data-export.js`
-- **Fungsi:** Export data mitra dalam berbagai format
-- **Fitur:**
-  - Export ke CSV, JSON, atau Excel
-  - Filter data berdasarkan kriteria
-  - Kompresi data untuk file besar
-  - Backup otomatis
+#### Fitur:
+- ✅ Auto-click semua tombol "success" di tabel mitra
+- ✅ Otomatis handle SweetAlert2 confirmation dialogs
+- ✅ Smart waiting dengan MutationObserver
+- ✅ Loop sampai semua mitra diproses
+- ✅ Auto-navigation setelah selesai
+- ✅ Error handling untuk stabilitas
 
-### SIPW Automation (`sipw-automation/`)
+#### Alur Kerja:
+1. Mencari semua `button.btn-success` di tabel
+2. Klik semua tombol success
+3. Handle SweetAlert2 confirmation pertama
+4. Handle SweetAlert2 confirmation kedua  
+5. Klik `button.btn-primary`
+6. Ulangi proses sampai tidak ada tombol success lagi
+7. Otomatis navigasi ke halaman logout/login
 
-#### `data-entry.js`
-- **Fungsi:** Otomatisasi input data ke sistem SIPW
-- **Fitur:**
-  - Auto-fill form dari data source
-  - Validasi data sebelum submit
-  - Batch data entry
-  - Error detection dan correction
+#### Cara Penggunaan:
+```javascript
+// 1. Buka halaman daftar mitra yang perlu diterima
+// 2. Pastikan tabel dengan tombol success sudah dimuat
+// 3. Copy-paste script terima mitra.js ke console
+// 4. Jalankan fungsi: autoClick()
+// 5. Script akan berjalan sampai semua mitra diproses
+```
 
-#### `validation.js`
-- **Fungsi:** Validasi data otomatis sesuai business rules
-- **Fitur:**
-  - Rule-based validation
-  - Cross-field validation
-  - Data integrity checking
-  - Automated correction suggestions
+#### Target Selector:
+- **Tombol Success:** `#vgt-table button.btn-success`
+- **SweetAlert Confirm:** `body > div.swal2-container > div > div.swal2-actions > button.swal2-confirm`
+- **Tombol Primary:** `button.btn-primary`
 
-#### `workflow.js`
-- **Fungsi:** Otomatisasi alur kerja dalam SIPW
-- **Fitur:**
-  - Auto-approval untuk kriteria tertentu
-  - Workflow routing otomatis
-  - Status tracking
-  - Notification handling
-
-#### `report-generator.js`
-- **Fungsi:** Generate laporan otomatis dari data SIPW
-- **Fitur:**
-  - Template-based reporting
-  - Scheduled report generation
-  - Multiple output formats
-  - Data visualization
-
-### Utilities (`utils/`)
-
-#### `common-functions.js`
-- **Fungsi:** Kumpulan fungsi utility yang sering digunakan
-- **Isi:**
-  - DOM manipulation helpers
-  - Date/time utilities
-  - String formatting functions
-  - HTTP request helpers
-
-#### `logger.js`
-- **Fungsi:** Sistem logging untuk debugging dan monitoring
-- **Fitur:**
-  - Colored console output
-  - Log levels (ERROR, WARN, INFO, DEBUG)
-  - Timestamp automatic
-  - Log export functionality
-
-#### `config.js`
-- **Fungsi:** Konfigurasi global untuk semua script
-- **Isi:**
-  - URL endpoints
-  - Timing settings
-  - Default parameters
-  - Environment variables
+---
 
 ## ⚙️ Konfigurasi
 
-### Setting Default
+### Delay Settings
+Setiap script memiliki delay yang dapat disesuaikan:
+
 ```javascript
-// Delay antar aksi (milliseconds)
-const DEFAULT_DELAY = 5000;
+// SIPW_download_all_document.js
+await delay(5000);  // 5 detik antar download
+await delay(3000);  // 3 detik tunggu halaman dimuat
 
-// Timeout untuk request (milliseconds)  
-const REQUEST_TIMEOUT = 30000;
+// alokasi mitra.js  
+await new Promise(resolve => setTimeout(resolve, 3000)); // 3 detik antar email
 
-// Maximum retry attempts
-const MAX_RETRIES = 3;
-
-// Batch size untuk processing
-const BATCH_SIZE = 50;
+// terima mitra.js
+await sleep(1000);  // 1 detik antar iterasi
+await sleep(500);   // 500ms antar klik
 ```
 
-### Customization
-Setiap script dapat dikustomisasi dengan mengubah parameter di bagian atas file:
-
+### Customization Email List
+Untuk mengubah daftar email di `alokasi mitra.js`:
 ```javascript
-// Contoh kustomisasi di alokasi-mitra.js
-const CONFIG = {
-    delay: 3000,           // Delay antar klik (ms)
-    batchSize: 25,         // Jumlah item per batch
-    autoRetry: true,       // Auto retry jika error
-    logLevel: 'INFO'       // Level logging
-};
+const emails = [
+    'email1@domain.com',
+    'email2@domain.com',
+    // tambahkan email baru di sini
+];
 ```
 
 ## 🔧 Troubleshooting
 
 ### Error Umum
 
-#### "Cannot find element"
-- **Penyebab:** Perubahan struktur HTML halaman
-- **Solusi:** Update selector di script
+#### "Element not found"
+- **Penyebab:** Selector berubah atau halaman belum dimuat
+- **Solusi:** 
+  - Refresh halaman dan coba lagi
+  - Update selector jika ada perubahan UI
+  - Pastikan sudah di halaman yang benar
 
-#### "Request timeout"
-- **Penyebab:** Koneksi lambat atau server overload
-- **Solusi:** Tingkatkan nilai `REQUEST_TIMEOUT`
+#### "Too many requests" atau website slow
+- **Penyebab:** Server overload karena terlalu banyak request
+- **Solusi:**
+  - Tingkatkan delay antar aksi
+  - Jalankan script saat server tidak sibuk
+  - Bagi proses menjadi batch kecil
 
-#### "Too many requests"
-- **Penyebab:** Rate limiting dari server
-- **Solusi:** Tingkatkan delay antar request
+#### SweetAlert tidak muncul
+- **Penyebab:** Dialog sudah ditangani atau ada error sebelumnya
+- **Solusi:**
+  - Refresh halaman dan mulai ulang
+  - Check console log untuk error detail
 
-### Tips Debug
-1. Buka console untuk melihat log detail
-2. Gunakan `debugger;` untuk breakpoint
-3. Check network tab untuk failed requests
-4. Pastikan login session masih aktif
+### Tips Debugging
+1. Buka Console untuk melihat log progress
+2. Jika script berhenti, check error message
+3. Pastikan internet stabil
+4. Jangan switch tab saat script berjalan
 
-## ⚠️ Peringatan & Disclaimer
+## ⚠️ Peringatan Penting
 
-### Penggunaan yang Bertanggung Jawab
-- **Rate Limiting:** Jangan spam server dengan request berlebihan
-- **Data Backup:** Selalu backup data sebelum menjalankan script
-- **Testing:** Test script di environment development terlebih dahulu
-- **Monitoring:** Monitor penggunaan untuk menghindari abuse
+### Penggunaan Bertanggung Jawab
+- **⚠️ Backup Data:** Selalu backup data sebelum menjalankan script
+- **⚠️ Test Environment:** Test di environment development dulu jika memungkinkan  
+- **⚠️ Rate Limiting:** Jangan spam server - gunakan delay yang cukup
+- **⚠️ Monitor Usage:** Awasi proses untuk memastikan berjalan normal
 
 ### Disclaimer
-- Script ini dibuat untuk membantu otomatisasi tugas repetitif
+- Script ini dibuat untuk membantu otomatisasi tugas repetitif BPS
 - Pengguna bertanggung jawab penuh atas penggunaan script
-- Tidak ada garansi bahwa script akan bekerja 100% sempurna
-- Perubahan pada website BPS dapat mempengaruhi fungsi script
+- Tidak ada garansi script akan bekerja 100% di semua kondisi
+- Perubahan UI website dapat mempengaruhi fungsi script
+- Selalu gunakan dengan bijak dan sesuai kebijakan organisasi
 
 ## 🤝 Kontribusi
 
 ### Cara Berkontribusi
-1. Fork repository ini
-2. Buat branch baru untuk fitur/perbaikan
-3. Commit changes dengan pesan yang jelas
-4. Push ke branch
-5. Buat Pull Request
+1. **Fork** repository ini
+2. **Edit** script sesuai kebutuhan
+3. **Test** perubahan dengan teliti
+4. **Submit** Pull Request dengan deskripsi jelas
 
-### Guidelines
-- Ikuti coding style yang sudah ada
-- Tambahkan dokumentasi untuk fungsi baru
-- Test script sebelum submit PR
-- Update README jika diperlukan
+### Bug Report
+Jika menemukan bug atau script tidak berfungsi:
+1. Buat **Issue** di GitHub
+2. Sertakan **screenshot** error
+3. Jelaskan **langkah reproduce** bug
+4. Cantumkan **browser** dan **OS** yang digunakan
 
-## 📞 Support
+## 📝 Changelog
 
-### Pelaporan Bug
-- Buat issue di GitHub dengan label "bug"
-- Sertakan screenshot dan error message
-- Jelaskan langkah untuk reproduce bug
-
-### Feature Request
-- Buat issue dengan label "enhancement"
-- Jelaskan kebutuhan dan use case
-- Berikan contoh implementasi jika memungkinkan
-
-## 📄 License
-
-Project ini menggunakan MIT License - lihat file [LICENSE](LICENSE) untuk detail.
-
-## 📚 Changelog
-
-### v1.0.0 (Latest)
-- Initial release
-- Basic automation untuk manajemen mitra
-- SIPW automation framework
-- Utility functions dan logging system
+### v1.0.0 (Current)
+- ✅ SIPW document download automation
+- ✅ Mitra allocation email automation  
+- ✅ Mitra acceptance/approval automation
+- ✅ Error handling dan progress logging
+- ✅ Smart delays untuk server stability
 
 ---
 
-**⭐ Jika project ini membantu pekerjaan Anda, jangan lupa berikan star!**
+**📧 Email dalam `alokasi mitra.js` dapat disesuaikan sesuai kebutuhan**
 
-**💡 Ada saran atau improvement? Silakan buat issue atau pull request!**
+**🔄 Script dapat dimodifikasi untuk selector yang berbeda jika UI berubah**
+
+**⭐ Jika project ini membantu, berikan star di GitHub!**
