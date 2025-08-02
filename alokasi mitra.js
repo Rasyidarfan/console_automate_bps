@@ -1,4 +1,4 @@
-const emails =['nikodemusmandowen1622@gmail.com','juliakoibur@gmail.com','rudytehupuring@gmail.com','alinawenda69@gmail.com','eleminamatuan7721@gmail.com','hadjierrahman@gmail.com','jovantamelab@transformnation.is','mekiwanimbo9734@gmail.com','bandargombo9723@gmail.com','slametnf17@gmail.com'];
+const emails =['sobat_id','NIK','|','nama_lengkap','email@email.com'];
 
 function simulateTyping(element, text) {
     // Clear existing value
@@ -51,5 +51,6 @@ async function processAllEmails() {
     }
     console.log('Semua email telah diproses!');
 }
+
 
 processAllEmails();
