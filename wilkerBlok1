@@ -1,0 +1,94 @@
+// Array angka yang akan diisikan
+const numberArray = [4,4,4,4,18,21,6,6,7,7,15,15,5,5,6,6,4,4,7,7,4,4];
+
+// Function untuk mengisi input
+function fillNumberInputs() {
+    // Ambil semua input dengan type="number"
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    
+    // Loop untuk mengisi setiap input
+    numberInputs.forEach((input, index) => {
+        if (index < numberArray.length) {
+            // Isi input dengan nilai dari array
+            input.value = numberArray[index];
+            
+            // Trigger event 'input' untuk setiap input
+            const event = new Event('input', { bubbles: true });
+            input.dispatchEvent(event);
+            
+            // Trigger event 'change' juga
+            const changeEvent = new Event('change', { bubbles: true });
+            input.dispatchEvent(changeEvent);
+            
+            console.log(`Input ${index + 1} diisi dengan nilai: ${numberArray[index]}`);
+        }
+    });
+    
+    console.log(`Total ${numberInputs.length} input telah diisi`);
+}
+
+// Function untuk menambahkan event listener ke semua input
+function addInputListeners() {
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    
+    numberInputs.forEach((input, index) => {
+        // Event listener untuk input (saat user mengetik)
+        input.addEventListener('input', function(e) {
+            console.log(`Input ${index + 1} diubah ke: ${e.target.value}`);
+            // Tambahkan logika custom di sini jika diperlukan
+        });
+        
+        // Event listener untuk change (saat input kehilangan focus)
+        input.addEventListener('change', function(e) {
+            console.log(`Input ${index + 1} selesai diubah ke: ${e.target.value}`);
+            // Tambahkan logika custom di sini jika diperlukan
+        });
+        
+        // Event listener untuk focus
+        input.addEventListener('focus', function(e) {
+            console.log(`Input ${index + 1} mendapat focus`);
+            // Highlight input yang sedang aktif
+            e.target.style.backgroundColor = '#e3f2fd';
+        });
+        
+        // Event listener untuk blur (kehilangan focus)
+        input.addEventListener('blur', function(e) {
+            console.log(`Input ${index + 1} kehilangan focus`);
+            // Kembalikan warna normal
+            e.target.style.backgroundColor = '';
+        });
+    });
+}
+
+// Jalankan ketika DOM sudah siap
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, memulai proses pengisian input...');
+    
+    // Tambahkan event listeners terlebih dahulu
+    addInputListeners();
+    
+    // Tunggu sebentar lalu isi input (untuk memastikan semua element sudah render)
+    setTimeout(() => {
+        fillNumberInputs();
+    }, 500);
+});
+
+// Function tambahan untuk mengisi ulang jika diperlukan
+function refillInputs() {
+    fillNumberInputs();
+}
+
+// Function untuk mengosongkan semua input
+function clearAllInputs() {
+    const numberInputs = document.querySelectorAll('input[type="number"]');
+    numberInputs.forEach((input, index) => {
+        input.value = '';
+        // Trigger events
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    console.log('Semua input telah dikosongkan');
+}
+
+// Expose functions ke global scope untuk debugging
+refillInputs();
